@@ -240,15 +240,16 @@ def request(url, get_response=True, rtype=None, params=None, proxies=True):
         return _request(url)
 
 
-def get_date_text(text):
+def get_date_text(text, romanian=True):
     """Retrieve date text or None from random text"""
 
     date_text = text
 
     if re.match('[0-9]+\s*(.*)\s*[0-9]+', date_text):
         month = re.match('[0-9]+\s*(.*)\s*[0-9]+',date_text).groups()[0].strip()
-        date_text = re.sub(month, _MONTHS_RO_EN[month], date_text).strip()
-
+        if romanian:
+        	date_text = re.sub(month, _MONTHS_RO_EN[month], date_text).strip()
+        
     try:
         parsed_time = dateutil.parser.parse(date_text)
         parsed_time = parsed_time.replace(tzinfo=None)
